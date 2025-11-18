@@ -22,7 +22,7 @@ Instale no local padrão: C:\Program Files\Tesseract-OCR
 2. Edite a variável `Path` e adicione: C:\Program Files\Tesseract-OCR
 3. Crie uma nova variável de sistema:
 - Nome: `TESSDATA_PREFIX`
-- Valor: `C:\Program Files\Tesseract-OCR`
+- Valor: `C:\Program Files\Tesseract-OCR\tessdata`
 
 ### 3. Download dos Pacotes de Idioma
 Os pacotes de idioma podem ser obtidos no repositório oficial:  

@@ -6,6 +6,9 @@ from PIL import Image
 import io
 import re
 from dotenv import load_dotenv
+import os
+from fastapi.middleware.cors import CORSMiddleware
+from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL
 
 from src.api.routes.recognition import router as recognition_router
 from src.api.routes.health import router as health_router
@@ -14,11 +17,11 @@ from src.api.routes.health import router as health_router
 load_dotenv()
 
 # Environment
-APP_NAME = os.getenv("APP_NAME", "API OCR")
-VERSION = os.getenv("VERSION", "1.0.0")
-ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
-
+APP_NAME = APP_NAME,
+VERSION = VERSION,
+ENVIRONMENT = ENVIRONMENT,
+LOG_LEVEL = LOG_LEVEL,
+CORS_ORIGINS = CORS_ORIGINS
 
 # Caminho do executável
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
@@ -50,7 +53,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins = CORS_ORIGINS,
-    allow_cretentials = True, 
+    allow_credentials = True, 
     allow_methods = ["*"], 
     allow_headers = ["*"]
 )

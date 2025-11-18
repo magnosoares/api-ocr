@@ -1,12 +1,12 @@
-from pydantic import BaseSettings
+#from pydantic import BaseSettings
+from dotenv import load_dotenv
+import os
 
-class Settings(BaseSettings):
-    """Configurações da aplicação"""
-    app_name: str = "Minha API"
-    app_version: str = "1.0.0"
-    debug: bool = False
-    
-    class Config:
-        env_file = ".env"
+load_dotenv()
 
-settings = Settings()
+APP_NAME = os.getenv("APP_NAME", "API OCR")
+VERSION = os.getenv("VERSION", "1.0.0")
+ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*")
+

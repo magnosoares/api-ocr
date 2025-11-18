@@ -1,7 +1,0 @@
-APP_NAME = API for OCR text extraction from images
-VERSION = 0.1.0
-ENVIROMNMENT = development
-LOG_LEVEL = INFO
-
-
-CORS_ORIGINS = *

@@ -137,10 +137,10 @@ Substitua isso pela sua lógica de negócio!
 - [X] 1. Separar endpoints de OCR do arquivo main.py
 - [X] 2. Configurar CORS
 - [X] 3. Configurar variáveis de ambiente em arquivo separado
-- [ ] 4. Endpoint 1 -> /ocr/texto
+- [X] 4. Endpoint 1 -> /ocr/texto
   - [ ] 4.1 Validação pydantic para endpoint 1
   - [ ] 4.2 Implementar testes para endpoint 1
-  - [ ] 4.3 Implementar logs para o endpoint 1
+  - [X] 4.3 Implementar logs para o endpoint 1
 - [ ] 5. Endpoint 2 -> /ocr/texto-arquivos
   - [ ] 5.1 Validação pydantic para endpoint 2
   - [ ] 5.2 Implementar testes para endpoint 2
@@ -154,4 +154,5 @@ Substitua isso pela sua lógica de negócio!
   - [ ] 7.2 Implementar testes para endpoint 4
   - [ ] 7.3 Implementar logs para o endpoint 4
 - [X] 8. Criar log para a aplicação
-- [ ] 9. Finalizar README.md
+- [ ] 9. Alterar visualização dos logs: escrita em arquivo
+- [ ] 10. Finalizar README.md

@@ -1,37 +1,82 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile
-from src.models.schemas import ImageUploadForOCR
 import logging
-import pytesseract
+from pytesseract import pytesseract
 from PIL import Image
 import io
 import re
+from dotenv import load_dotenv
+import os
+from fastapi.middleware.cors import CORSMiddleware
+from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL, TESSERACT_LINUX_CMD, TESSERACT_WINDOWS_CMD
 
-# Caminho do executável
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+from src.models.schemas import ImageUploadForOCR
+from src.api.routes.recognition import router as recognition_router
+from src.api.routes.search import router as search_router
+from src.api.routes.health import router as health_router
+from src.api.routes.about import router as about_router
+
+# Environment
+APP_NAME = APP_NAME,
+VERSION = VERSION,
+ENVIRONMENT = ENVIRONMENT,
+LOG_LEVEL = LOG_LEVEL,
+CORS_ORIGINS = CORS_ORIGINS
+tesseract_cmd = TESSERACT_LINUX_CMD
+#tesseract_cmd = TESSERACT_WINDOWS_CMD
 
 # Configuração de logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="API - Automação OCR")
+app = FastAPI(
+    title = "API - Automação OCR",
+    version = "0.1.0",
+    description = "API for OCR text extraction from images",
+    openapi_tags = [
+        {
+            "name": "Health",
+            "description": "Returns the API health status"
+        },
+        {
+            "name": "Recognition",
+            "description": "Methods to extrat text from images"
+        },
+        {
+            "name": "Search",
+            "description": "Methods to search text from files"
+        },
+        {
+            "name": "About",
+            "description": "Developers Team"
+        }
+    ]
+)
 
-@app.get("/")
-def api_ocr():
-    """Endpoint de health check"""
-    return {"status": "ok", "message": "API funcionando"}
 
-@app.post("/ocr/texto")
-def text_from_file(file: UploadFile = File(...)):
-    # validação simples
-    if file.content_type not in ["image/jpeg", "image/png"]:
-        return {"error": "Formato inválido. Use JPEG ou PNG."}
+# ==================
+# CORS Config
+# ==================
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins = CORS_ORIGINS,
+    allow_credentials = True, 
+    allow_methods = ["*"], 
+    allow_headers = ["*"]
+)
 
-    # leitura da imagem
-    image_bytes = file.file.read()
-    image = Image.open(io.BytesIO(image_bytes))
-    
-    # processamento OCR
-    texto = pytesseract.image_to_string(image, lang="por")
-    texto = re.sub(r"\s+", " ", texto.replace("\n", " ").replace("\r", " ").replace("\t", " "))
-    
-    return {"text": texto}
+
+# ======================================
+# ROUTES
+# ======================================
+
+# health-check route
+app.include_router(recognition_router)
+
+# Recognition route
+app.include_router(health_router)
+
+# Search route
+app.include_router(search_router)
+
+# About route
+app.include_router(about_router)

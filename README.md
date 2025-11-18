@@ -131,3 +131,27 @@ API de soma simples:
 - **POST /calcular**: Soma dois números
 
 Substitua isso pela sua lógica de negócio!
+
+
+## 🛠️TO-DO List
+- [X] 1. Separar endpoints de OCR do arquivo main.py
+- [X] 2. Configurar CORS
+- [X] 3. Configurar variáveis de ambiente em arquivo separado
+- [ ] 4. Endpoint 1 -> /ocr/texto
+  - [ ] 4.1 Validação pydantic para endpoint 1
+  - [ ] 4.2 Implementar testes para endpoint 1
+  - [ ] 4.3 Implementar logs para o endpoint 1
+- [ ] 5. Endpoint 2 -> /ocr/texto-arquivos
+  - [ ] 5.1 Validação pydantic para endpoint 2
+  - [ ] 5.2 Implementar testes para endpoint 2
+  - [ ] 5.3 Implementar logs para o endpoint 2
+- [ ] 6. Endpoint 3 -> /ocr/pesquisa-texto
+  - [ ] 6.1 Validação pydantic para endpoint 3
+  - [ ] 6.2 Implementar testes para endpoint 3
+  - [ ] 6.3 Implementar logs para o endpoint 3
+- [ ] 7. Endpoint 4 -> Pesquisa palavras em vários arquivos compactados (.zip)
+  - [ ] 7.1 Validação pydantic para endpoint 4
+  - [ ] 7.2 Implementar testes para endpoint 4
+  - [ ] 7.3 Implementar logs para o endpoint 4
+- [ ] 8. Criar log para a aplicação
+- [ ] 9. Finalizar README.md

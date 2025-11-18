@@ -11,4 +11,3 @@ class ImageUploadForOCR(BaseModel):
             raise ValueError("Formato inválido. Use JPEG ou PNG.")
         return v
 
-

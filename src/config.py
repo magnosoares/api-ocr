@@ -9,4 +9,6 @@ VERSION = os.getenv("VERSION", "1.0.0")
 ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*")
+TESSERACT_LINUX_CMD = os.getenv("TESSERACT_LINUX_CMD")
+TESSERACT_WINDOWS_CMD = os.getenv("TESSERACT_WINDOWS_CMD")
 

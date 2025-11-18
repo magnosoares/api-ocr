@@ -1,13 +1,13 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile
 import logging
-import pytesseract
+from pytesseract import pytesseract
 from PIL import Image
 import io
 import re
 from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
-from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL
+from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL, TESSERACT_LINUX_CMD, TESSERACT_WINDOWS_CMD
 
 from src.models.schemas import ImageUploadForOCR
 from src.api.routes.recognition import router as recognition_router
@@ -15,18 +15,13 @@ from src.api.routes.search import router as search_router
 from src.api.routes.health import router as health_router
 from src.api.routes.about import router as about_router
 
-# Loading environment 
-load_dotenv()
-
 # Environment
 APP_NAME = APP_NAME,
 VERSION = VERSION,
 ENVIRONMENT = ENVIRONMENT,
 LOG_LEVEL = LOG_LEVEL,
 CORS_ORIGINS = CORS_ORIGINS
-
-# Caminho do executável
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+tesseract_cmd = TESSERACT_LINUX_CMD
 
 # Configuração de logging
 logging.basicConfig(level=logging.INFO)

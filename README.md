@@ -134,7 +134,7 @@ Substitua isso pela sua lógica de negócio!
 
 
 # 🛠️TO-DO List
-- [ ] 1. Separar endpoints de OCR do arquivo main.py
+- [X] 1. Separar endpoints de OCR do arquivo main.py
 - [ ] 2.Endpoint 1 -> /ocr/texto
 - [ ] 3.Endpoint 2 -> /ocr/texto-arquivos
 - [ ] 4.Endpoint 3 -> /ocr/pesquisa-texto

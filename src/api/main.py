@@ -6,6 +6,9 @@ from PIL import Image
 import io
 import re
 
+from src.api.routes.recognition import router as recognition_router
+from src.api.routes.health import router as health_router
+
 # Caminho do executável
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
@@ -13,25 +16,29 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="API - Automação OCR")
+app = FastAPI(
+    title = "API - Automação OCR",
+    version = "0.1.0",
+    description = "API for OCR text extraction from images",
+    openapi_tags = [
+        {
+            "name": "Health",
+            "description": "Returns the API health status"
+        },
+        {
+            "name": "Recognition",
+            "description": "Methods to extrat text from images"
+        }
+    ]
+)
 
-@app.get("/")
-def api_ocr():
-    """Endpoint de health check"""
-    return {"status": "ok", "message": "API funcionando"}
 
-@app.post("/ocr/texto")
-def text_from_file(file: UploadFile = File(...)):
-    # validação simples
-    if file.content_type not in ["image/jpeg", "image/png"]:
-        return {"error": "Formato inválido. Use JPEG ou PNG."}
+# ======================================
+# ROUTES
+# ======================================
 
-    # leitura da imagem
-    image_bytes = file.file.read()
-    image = Image.open(io.BytesIO(image_bytes))
-    
-    # processamento OCR
-    texto = pytesseract.image_to_string(image, lang="por")
-    texto = re.sub(r"\s+", " ", texto.replace("\n", " ").replace("\r", " ").replace("\t", " "))
-    
-    return {"text": texto}
+# health-check route
+app.include_router(recognition_router)
+
+# Recognition route
+app.include_router(health_router)

@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, File, UploadFile
 import logging
 from pytesseract import pytesseract
@@ -28,10 +29,24 @@ tesseract_cmd = TESSERACT_LINUX_CMD
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Api lifecycle
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    #STARTUP
+    logger.info("API iniciando")
+    logger.info(f"Usando o Tesseract no caminho {tesseract_cmd}")
+    logger.info("CORS habilitado")
+    logger.info("API pronta!")
+
+    yield
+
+    logger.info("API encerrando")
+
 app = FastAPI(
     title = "API - Automação OCR",
     version = "0.1.0",
     description = "API for OCR text extraction from images",
+    lifespan = lifespan,
     openapi_tags = [
         {
             "name": "Health",

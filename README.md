@@ -153,5 +153,5 @@ Substitua isso pela sua lógica de negócio!
   - [ ] 7.1 Validação pydantic para endpoint 4
   - [ ] 7.2 Implementar testes para endpoint 4
   - [ ] 7.3 Implementar logs para o endpoint 4
-- [ ] 8. Criar log para a aplicação
+- [X] 8. Criar log para a aplicação
 - [ ] 9. Finalizar README.md

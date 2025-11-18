@@ -133,7 +133,7 @@ API de soma simples:
 Substitua isso pela sua lógica de negócio!
 
 
-# Tasks
+# 🛠️TO-DO List
 - [ ] 1. Separar endpoints de OCR do arquivo main.py
 - [ ] 2.Endpoint 1 -> /ocr/texto
 - [ ] 3.Endpoint 2 -> /ocr/texto-arquivos
@@ -143,7 +143,9 @@ Substitua isso pela sua lógica de negócio!
 - [ ] 7. Validação endpoint 2
 - [ ] 8. Validação endpoint 3
 - [ ] 9. Validação endpoint 4
-- [ ] 10. Criar log para a aplicação
-- [ ] 11. Configurar CORS
-- [ ] 12. Configurar variáveis de ambiente em arquivo separado
-- [ ] 13. Finalizar README.md
+- [ ] 10. Implementar testes para o endpoint 1
+- [ ] 11. Implementar testes para o endpoint 3
+- [ ] 12. Criar log para a aplicação
+- [ ] 13. Configurar CORS
+- [ ] 14. Configurar variáveis de ambiente em arquivo separado
+- [ ] 15. Finalizar README.md

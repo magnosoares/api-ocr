@@ -1,5 +1,4 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile
-from src.models.schemas import ImageUploadForOCR
 import logging
 import pytesseract
 from PIL import Image
@@ -10,7 +9,9 @@ import os
 from fastapi.middleware.cors import CORSMiddleware
 from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL
 
+from src.models.schemas import ImageUploadForOCR
 from src.api.routes.recognition import router as recognition_router
+from src.api.routes.search import router as search_router
 from src.api.routes.health import router as health_router
 from src.api.routes.about import router as about_router
 
@@ -45,6 +46,10 @@ app = FastAPI(
             "description": "Methods to extrat text from images"
         },
         {
+            "name": "Search",
+            "description": "Methods to search text from files"
+        },
+        {
             "name": "About",
             "description": "Developers Team"
         }
@@ -73,6 +78,9 @@ app.include_router(recognition_router)
 
 # Recognition route
 app.include_router(health_router)
+
+# Search route
+app.include_router(search_router)
 
 # About route
 app.include_router(about_router)

@@ -6,7 +6,7 @@ from src.config import  APP_NAME, VERSION, ENVIRONMENT
 router = APIRouter(prefix="/health", tags = ["Health"])
 
 @router.get("/", status_code = 200)
-def api_ocr():
+def health():
     """Endpoint de Health check"""
     return {
         "status": "ok", 

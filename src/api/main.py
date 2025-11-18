@@ -12,6 +12,7 @@ from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL
 
 from src.api.routes.recognition import router as recognition_router
 from src.api.routes.health import router as health_router
+from src.api.routes.about import router as about_router
 
 # Loading environment 
 load_dotenv()
@@ -42,6 +43,10 @@ app = FastAPI(
         {
             "name": "Recognition",
             "description": "Methods to extrat text from images"
+        },
+        {
+            "name": "About",
+            "description": "Developers Team"
         }
     ]
 )
@@ -68,3 +73,6 @@ app.include_router(recognition_router)
 
 # Recognition route
 app.include_router(health_router)
+
+# About route
+app.include_router(about_router)

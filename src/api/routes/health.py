@@ -3,7 +3,6 @@
 from fastapi import APIRouter
 from src.config import  APP_NAME, VERSION, ENVIRONMENT
 
-
 router = APIRouter(prefix="/health", tags = ["Health"])
 
 @router.get("/", status_code = 200)

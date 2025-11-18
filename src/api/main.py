@@ -22,6 +22,7 @@ ENVIRONMENT = ENVIRONMENT,
 LOG_LEVEL = LOG_LEVEL,
 CORS_ORIGINS = CORS_ORIGINS
 tesseract_cmd = TESSERACT_LINUX_CMD
+#tesseract_cmd = TESSERACT_WINDOWS_CMD
 
 # Configuração de logging
 logging.basicConfig(level=logging.INFO)

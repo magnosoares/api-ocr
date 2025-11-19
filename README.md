@@ -72,16 +72,21 @@ Segue descrição de cada *endpoint* da API:
 
 Recebe um arquivo com uma imagem (jpeg ou png) e devolve o texto contido no arquivo.
 
-### 🔗 /recognition/zip-file
+
+### 🔗 /recognition/zip-files
 Recupera texto de vários arquivos compactados (.zip).
 
 
-### 🔗 /ocr/pesquisa-texto
-Pesquisa palavras em um arquivo e retorna quais estão presentes.
+### 🔗 /recognition/pdf-file
+Recupera texto de arquivo pdf.
 
 
-### 🔗 /ocr/pesquisa-texto-arquivos
-Pesquisa palavras em vários arquivos compactados (.zip) e retorna quais arquivos têm quais palavras.
+### 🔗 /search/img-file
+Pesquisa palavras em um arquivo de imagem (jpeg ou png) e retorna quais estão presentes.
+
+
+### 🔗 /search/zip-files
+Pesquisa palavras em vários arquivos compactados (.zip) e retorna quais arquivos contém quais palavras.
 
 
 ## Estrutura

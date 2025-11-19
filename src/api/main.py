@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL, TESSERACT_LINUX_CMD, TESSERACT_WINDOWS_CMD
 from src.config import setup_logging
 
-from src.models.schemas import ImageUploadForOCR
+#from src.models.schemas import ImageUploadForOCR
 from src.api.routes.recognition import router as recognition_router
 from src.api.routes.search import router as search_router
 from src.api.routes.health import router as health_router

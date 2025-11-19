@@ -138,7 +138,7 @@ Substitua isso pela sua lógica de negócio!
 - [X] 2. Configurar CORS
 - [X] 3. Configurar variáveis de ambiente em arquivo separado
 - [X] 4. Endpoint 1 -> /ocr/texto
-  - [ ] 4.1 Validação pydantic para endpoint 1
+  - [X] 4.1 Validação pydantic para endpoint 1
   - [ ] 4.2 Implementar testes para endpoint 1
   - [X] 4.3 Implementar logs para o endpoint 1
 - [ ] 5. Endpoint 2 -> /ocr/texto-arquivos

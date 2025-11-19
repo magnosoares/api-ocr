@@ -58,7 +58,7 @@ app = FastAPI(
         },
         {
             "name": "Recognition",
-            "description": "Methods to extrat text from images"
+            "description": "Methods to extrat text from files"
         },
         {
             "name": "Search",

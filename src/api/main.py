@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
 from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL, TESSERACT_LINUX_CMD, TESSERACT_WINDOWS_CMD
+from src.config import setup_logging
 
 from src.models.schemas import ImageUploadForOCR
 from src.api.routes.recognition import router as recognition_router
@@ -26,7 +27,8 @@ tesseract_cmd = TESSERACT_LINUX_CMD
 #tesseract_cmd = TESSERACT_WINDOWS_CMD
 
 # Configuração de logging
-logging.basicConfig(level=logging.INFO)
+#logging.basicConfig(level=logging.INFO)
+setup_logging()
 logger = logging.getLogger(__name__)
 
 # Api lifecycle

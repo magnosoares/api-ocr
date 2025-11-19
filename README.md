@@ -56,7 +56,7 @@ tessdata\spa
 ## ⚙️ Instalação e Configuração do Poppler (necessário para utilização do pacote pdf2image)
 
 ### 1. Instalação
-Baixe e instale o Poppler no Windows a partir do [Poppler for Windows](https://github.com/oschwartz10612/poppler-windows).  
+Baixe e instale o [Poppler](https://github.com/conda-forge/poppler-feedstock) no Windows a partir do [Poppler for Windows](https://github.com/oschwartz10612/poppler-windows).  
 Extraia o conteúdo do pacote em um diretório de sua escolha. Ex.: C:\poppler
 
 ### 2. Atualização das Variáveis de Ambiente

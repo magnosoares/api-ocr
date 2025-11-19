@@ -11,9 +11,9 @@ from src.api.routes.health import router as health_router
 from src.api.routes.about import router as about_router
 
 
-# ==================
+# ======================================
 # Environment
-# ==================
+# ======================================
 
 APP_NAME = APP_NAME,
 VERSION = VERSION,
@@ -23,16 +23,16 @@ CORS_ORIGINS = CORS_ORIGINS
 tesseract_cmd = TESSERACT_LINUX_CMD
 #tesseract_cmd = TESSERACT_WINDOWS_CMD
 
-# ==================
+# ======================================
 # Logging config
-# ==================
+# ======================================
 
 setup_logging()
 logger = logging.getLogger(__name__)
 
-# ==================
+# ======================================
 # API
-# ==================
+# ======================================
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -72,9 +72,9 @@ app = FastAPI(
 )
 
 
-# ==================
+# ======================================
 # CORS Config
-# ==================
+# ======================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins = CORS_ORIGINS,

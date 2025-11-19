@@ -1,7 +1,6 @@
 # api-ocr/src/api/routes/recognition.py
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
-#from src.models.schemas import ImageUploadForOCR
+from fastapi import APIRouter, File, UploadFile
 import logging
 import pytesseract
 from PIL import Image

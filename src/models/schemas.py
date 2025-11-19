@@ -1,3 +1,5 @@
+# src/api/models/schemas.py
+
 from fastapi import UploadFile
 from pydantic import BaseModel, validator
 

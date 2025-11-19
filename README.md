@@ -10,6 +10,8 @@ API para automatizar a realização de OCR em arquivos jpeg e png.
 - Pillow
 - pytesseract
 - Tesseract OCR (instalação manual)
+- Poppler (instalação manual)
+- pdf2image
 
 ## ⚙️ Instalação e Configuração do Tesseract
 
@@ -95,12 +97,19 @@ Pesquisa palavras em vários arquivos compactados (.zip) e retorna quais arquivo
 template/
 ├── src/
 │   ├── api/
-│   │   └── main.py          # Endpoints da API
+│   │   ├── routes/
+│   │   │   ├── about.py        # Endpoints da rota about
+│   │   │   ├── health.py       # Endpoints da rota health
+│   │   │   ├── recognition.py  # Endpoints da rota recognition
+│   │   │   └── search.py       # Endpoints da rota search
+│   │   └── main.py             # Criação da API e configuração das rotas
 │   ├── models/
-│   │   └── schemas.py       # Modelos Pydantic
-│   └── config.py            # Configurações
+│   │   └── schemas.py          # Modelos Pydantic
+│   └── config.py               # Configurações
+├── services/
+│   └── ocr_service.py          # Serviço para execução do OCR
 ├── tests/
-│   └── test_template.py     # Testes automatizados
+│   └── test_template.py        # Testes automatizados
 ├── requirements.txt
 └── .gitignore
 ```

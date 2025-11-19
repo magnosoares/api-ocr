@@ -1,15 +1,8 @@
-from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi import FastAPI
 import logging
-from pytesseract import pytesseract
-from PIL import Image
-import io
-import re
-from dotenv import load_dotenv
-import os
 from fastapi.middleware.cors import CORSMiddleware
 from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL, TESSERACT_LINUX_CMD, TESSERACT_WINDOWS_CMD
 
-from src.models.schemas import ImageUploadForOCR
 from src.api.routes.recognition import router as recognition_router
 from src.api.routes.search import router as search_router
 from src.api.routes.health import router as health_router

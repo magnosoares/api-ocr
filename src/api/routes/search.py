@@ -10,8 +10,8 @@ import re
 
 router = APIRouter(prefix="/search", tags = ["Search"])
 
-@router.post("/file")
-def text_from_file(file: UploadFile = File(...)):
+@router.post("/img-file")
+def search_text_in_img_file(file: UploadFile = File(...)):
     # validação simples
     if file.content_type not in ["image/jpeg", "image/png"]:
         return {"error": "Formato inválido. Use JPEG ou PNG."}
@@ -28,7 +28,7 @@ def text_from_file(file: UploadFile = File(...)):
 
 
 @router.post("/zip-files")
-def text_from_file(file: UploadFile = File(...)):
+def search_text_in_zip_files(file: UploadFile = File(...)):
     # validação simples
     if file.content_type not in ["image/jpeg", "image/png"]:
         return {"error": "Formato inválido. Use JPEG ou PNG."}

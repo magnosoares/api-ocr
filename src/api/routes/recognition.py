@@ -21,6 +21,7 @@ def text_from_file(file: UploadFile = File(...)):
         return {"error": "Formato inválido. Use JPEG ou PNG."}
     
     logger.info(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
+    
     image_bytes = file.file.read()
     
     texto = extract_text_from_image(image_bytes, "por")

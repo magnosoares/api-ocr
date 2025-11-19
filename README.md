@@ -58,13 +58,12 @@ tessdata\spa
 ## ⚙️ Instalação e Configuração do Poppler (necessário para utilização do pacote pdf2image)
 
 ### 1. Instalação
-Baixe e instale o [Poppler](https://github.com/conda-forge/poppler-feedstock) no Windows a partir do [Poppler for Windows](https://github.com/oschwartz10612/poppler-windows).  
+Baixe o [Poppler](https://github.com/conda-forge/poppler-feedstock) para Windows a partir do [Poppler for Windows](https://github.com/oschwartz10612/poppler-windows).  
 Extraia o conteúdo do pacote em um diretório de sua escolha. Ex.: C:\poppler
 
 ### 2. Atualização das Variáveis de Ambiente
 1. Abra **Configurações do Sistema → Variáveis de Ambiente**.
 2. Edite a variável `Path` e adicione o caminho para o diretório Library\bin do Poppler. Ex.: C:\poppler\poppler-25.11.0\Library\bin
-
 
 ## 🌐 Endpoints da API
 
@@ -162,21 +161,25 @@ Substitua isso pela sua lógica de negócio!
 - [X] 1. Separar endpoints de OCR do arquivo main.py
 - [X] 2. Configurar CORS
 - [X] 3. Configurar variáveis de ambiente em arquivo separado
-- [ ] 4. Endpoint 1 -> /ocr/texto
+- [ ] 4. Endpoint 1 -> /recognition/img-file
   - [ ] 4.1 Validação pydantic para endpoint 1
   - [ ] 4.2 Implementar testes para endpoint 1
   - [ ] 4.3 Implementar logs para o endpoint 1
-- [ ] 5. Endpoint 2 -> /ocr/texto-arquivos
+- [ ] 5. Endpoint 2 -> /recognition/zip-files
   - [ ] 5.1 Validação pydantic para endpoint 2
   - [ ] 5.2 Implementar testes para endpoint 2
   - [ ] 5.3 Implementar logs para o endpoint 2
-- [ ] 6. Endpoint 3 -> /ocr/pesquisa-texto
+- [ ] 6. Endpoint 3 -> /recognition/pdf-file
   - [ ] 6.1 Validação pydantic para endpoint 3
   - [ ] 6.2 Implementar testes para endpoint 3
   - [ ] 6.3 Implementar logs para o endpoint 3
-- [ ] 7. Endpoint 4 -> Pesquisa palavras em vários arquivos compactados (.zip)
+- [ ] 7. Endpoint 4 -> /search/img-file
   - [ ] 7.1 Validação pydantic para endpoint 4
   - [ ] 7.2 Implementar testes para endpoint 4
   - [ ] 7.3 Implementar logs para o endpoint 4
-- [ ] 8. Criar log para a aplicação
-- [ ] 9. Finalizar README.md
+- [ ] 8. Endpoint 5 -> /search/zip-files
+  - [ ] 8.1 Validação pydantic para endpoint 5
+  - [ ] 8.2 Implementar testes para endpoint 5
+  - [ ] 8.3 Implementar logs para o endpoint 5
+- [ ] 9. Criar log para a aplicação
+- [ ] 10. Finalizar README.md

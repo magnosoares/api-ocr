@@ -53,15 +53,26 @@ tessdata\por
 tessdata\spa
 ```
 
+## ⚙️ Instalação e Configuração do Poppler (necessário para utilização do pacote pdf2image)
+
+### 1. Instalação
+Baixe e instale o Poppler no Windows a partir do [Poppler for Windows](https://github.com/oschwartz10612/poppler-windows).  
+Extraia o conteúdo do pacote em um diretório de sua escolha. Ex.: C:\poppler
+
+### 2. Atualização das Variáveis de Ambiente
+1. Abra **Configurações do Sistema → Variáveis de Ambiente**.
+2. Edite a variável `Path` e adicione o caminho para o diretório Library\bin do Poppler. Ex.: C:\poppler\poppler-25.11.0\Library\bin
+
+
 ## 🌐 Endpoints da API
 
 Segue descrição de cada *endpoint* da API:
 
-### 🔗 /ocr/texto
+### 🔗 /recognition/img-file
 
-Recebe um arquivo e devolve o texto contido no arquivo.
+Recebe um arquivo com uma imagem (jpeg ou png) e devolve o texto contido no arquivo.
 
-### 🔗 /ocr/texto-arquivos
+### 🔗 /recognition/zip-file
 Recupera texto de vários arquivos compactados (.zip).
 
 

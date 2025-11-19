@@ -17,10 +17,10 @@ logger = logging.getLogger(__name__)
 def text_from_file(file: UploadFile = File(...)):
     # validação simples
     if file.content_type not in ["image/jpeg", "image/png"]:
-        logger.warning(f"FILE INFO - Name: {file.filename}, Size: {file.size}")
+        logger.warning(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
         return {"error": "Formato inválido. Use JPEG ou PNG."}
     
-    logger.info(f"FILE INFO - Name: {file.filename}, Size: {file.size}")
+    logger.info(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
     image_bytes = file.file.read()
     
     texto = extract_text_from_image(image_bytes, "por")

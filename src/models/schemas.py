@@ -1,7 +1,7 @@
 # src/api/models/schemas.py
 
 from fastapi import UploadFile
-from pydantic import BaseModel, field_validator, validator
+from pydantic import BaseModel, Field
 
 # class ImageUploadForOCR(BaseModel):
 #     file: UploadFile
@@ -30,7 +30,6 @@ from pydantic import BaseModel, field_validator, validator
 #         if v > 10_485_760:
 #             raise ValueError("File too large. Max 10 MB.")
 #         return v
-
 
 
 class RecognitionFileOutput(BaseModel):

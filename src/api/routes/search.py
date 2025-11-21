@@ -1,7 +1,7 @@
 # api-ocr/src/api/routes/search.py
 
 from fastapi import APIRouter, File, HTTPException, UploadFile
-from src.models.schemas import ImageUploadForOCR
+#from src.models.schemas import ImageUploadForOCR
 import logging
 import pytesseract
 from PIL import Image

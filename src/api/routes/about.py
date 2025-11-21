@@ -13,7 +13,7 @@ def about():
     return [
         {
             "name": "Tiago André da Silveira Fialho",
-            "CPF": "953.049.671-00"
+            "Matrícula": "192.028-6"
         },
         {
             "name": "Magno",

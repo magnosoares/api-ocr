@@ -15,27 +15,6 @@ router = APIRouter(prefix="/recognition", tags = ["Recognition"])
 
 logger = logging.getLogger(__name__)
 
-# @router.post("/image-file", response_model = RecognitionFileOutput, status_code = 200)
-# def text_from_file(file: UploadFile = File(...)):
-#     # validação simples
-#     if file.content_type not in ["image/jpeg", "image/png"]:
-#         logger.warning(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
-#         return {"error": "Formato inválido. Use JPEG ou PNG."}
-    
-#     logger.info(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
-
-#     image_bytes = file.file.read()
-    
-#     text = ocr_image(image_bytes, "por")
-
-#     logger.info("Reconhecimento de caracteres finalizado")
-    
-#     #return {"text": texto}
-#     return RecognitionFileOutput (
-#         file_name = file.filename,
-#         file_size = file.size,
-#         text_output = text
-#     )
 
 @router.post("/image-file", response_model=RecognitionImageFileOutput)
 async def text_from_file(input: RecognitionImageFileInput = Depends()):

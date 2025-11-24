@@ -1,6 +1,6 @@
 # api-ocr/src/api/routes/recognition.py
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 import logging
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
@@ -9,33 +9,53 @@ from PIL import Image
 import io
 import re
 from src.services.ocr_service import ocr_image, ocr_pdf
-from src.models.schemas import RecognitionFileOutput
+from src.models.schemas import RecognitionImageFileInput, RecognitionImageFileOutput
 
 router = APIRouter(prefix="/recognition", tags = ["Recognition"])
 
 logger = logging.getLogger(__name__)
 
-@router.post("/image-file", response_model = RecognitionFileOutput, status_code = 200)
-def text_from_file(file: UploadFile = File(...)):
-    # validação simples
-    if file.content_type not in ["image/jpeg", "image/png"]:
-        logger.warning(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
-        return {"error": "Formato inválido. Use JPEG ou PNG."}
+# @router.post("/image-file", response_model = RecognitionFileOutput, status_code = 200)
+# def text_from_file(file: UploadFile = File(...)):
+#     # validação simples
+#     if file.content_type not in ["image/jpeg", "image/png"]:
+#         logger.warning(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
+#         return {"error": "Formato inválido. Use JPEG ou PNG."}
     
-    logger.info(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
+#     logger.info(f"FILE INFO - Name: {file.filename}, Size: {(file.size / 1000):.1f}KB")
 
-    image_bytes = file.file.read()
+#     image_bytes = file.file.read()
     
+#     text = ocr_image(image_bytes, "por")
+
+#     logger.info("Reconhecimento de caracteres finalizado")
+    
+#     #return {"text": texto}
+#     return RecognitionFileOutput (
+#         file_name = file.filename,
+#         file_size = file.size,
+#         text_output = text
+#     )
+
+@router.post("/image-file", response_model=RecognitionImageFileOutput)
+async def text_from_file(input: RecognitionImageFileInput = Depends()):
+
+    file = input.file
+
+    logger.info(
+        f"Validação bem sucedida: {file.filename}, "
+        f"Size: {(file.size / 1000):.1f}KB"
+    )
+
+    image_bytes = await file.read()
     text = ocr_image(image_bytes, "por")
 
-    logger.info("Reconhecimento de caracteres finalizado")
-    
-    #return {"text": texto}
-    return RecognitionFileOutput (
-        file_name = file.filename,
-        file_size = file.size,
-        text_output = text
+    return RecognitionImageFileOutput(
+        file_name=file.filename,
+        file_size=file.size,
+        text_output=text
     )
+
 
 
 @router.post("/zip-files")

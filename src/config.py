@@ -1,4 +1,4 @@
-#from pydantic import BaseSettings
+# from pydantic import BaseSettings
 import logging
 from dotenv import load_dotenv
 from pathlib import Path
@@ -20,12 +20,10 @@ LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 LOG_DIR = Path("logs")
 LOG_DIR.mkdir(exist_ok=True)
 
+
 def setup_logging():
     logging.basicConfig(
         level=LOG_LEVEL,
         format=LOG_FORMAT,
-        handlers=[
-            logging.FileHandler(LOG_DIR / "app.log"),
-            logging.StreamHandler()
-        ]
+        handlers=[logging.FileHandler(LOG_DIR / "app.log"), logging.StreamHandler()],
     )

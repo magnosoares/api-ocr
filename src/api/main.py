@@ -1,9 +1,15 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import logging
-from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
-from src.config import APP_NAME, VERSION, CORS_ORIGINS, ENVIRONMENT, LOG_LEVEL, TESSERACT_LINUX_CMD, TESSERACT_WINDOWS_CMD
+from src.config import (
+    APP_NAME,
+    VERSION,
+    CORS_ORIGINS,
+    ENVIRONMENT,
+    LOG_LEVEL,
+    TESSERACT_LINUX_CMD,
+)
 from src.config import setup_logging
 from src.api.routes.recognition import router as recognition_router
 from src.api.routes.search import router as search_router
@@ -15,13 +21,13 @@ from src.api.routes.about import router as about_router
 # Environment
 # ======================================
 
-APP_NAME = APP_NAME,
-VERSION = VERSION,
-ENVIRONMENT = ENVIRONMENT,
-LOG_LEVEL = LOG_LEVEL,
+APP_NAME = (APP_NAME,)
+VERSION = (VERSION,)
+ENVIRONMENT = (ENVIRONMENT,)
+LOG_LEVEL = (LOG_LEVEL,)
 CORS_ORIGINS = CORS_ORIGINS
 tesseract_cmd = TESSERACT_LINUX_CMD
-#tesseract_cmd = TESSERACT_WINDOWS_CMD
+# tesseract_cmd = TESSERACT_WINDOWS_CMD
 
 # ======================================
 # Logging config
@@ -34,9 +40,10 @@ logger = logging.getLogger(__name__)
 # API
 # ======================================
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    #STARTUP
+    # STARTUP
     logger.info("API iniciando")
     logger.info(f"Usando o Tesseract no caminho {tesseract_cmd}")
     logger.info("CORS habilitado")
@@ -46,29 +53,18 @@ async def lifespan(app: FastAPI):
 
     logger.info("API encerrando")
 
+
 app = FastAPI(
-    title = "API - Automação OCR",
-    version = "0.1.0",
-    description = "API for OCR text extraction from images",
-    lifespan = lifespan,
-    openapi_tags = [
-        {
-            "name": "Health",
-            "description": "Returns the API health status"
-        },
-        {
-            "name": "Recognition",
-            "description": "Methods to extrat text from files"
-        },
-        {
-            "name": "Search",
-            "description": "Methods to search text from files"
-        },
-        {
-            "name": "About",
-            "description": "Developers Team"
-        }
-    ]
+    title="API - Automação OCR",
+    version="0.1.0",
+    description="API for OCR text extraction from images",
+    lifespan=lifespan,
+    openapi_tags=[
+        {"name": "Health", "description": "Returns the API health status"},
+        {"name": "Recognition", "description": "Methods to extrat text from files"},
+        {"name": "Search", "description": "Methods to search text from files"},
+        {"name": "About", "description": "Developers Team"},
+    ],
 )
 
 
@@ -77,10 +73,10 @@ app = FastAPI(
 # ======================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = CORS_ORIGINS,
-    allow_credentials = True, 
-    allow_methods = ["*"], 
-    allow_headers = ["*"]
+    allow_origins=CORS_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 

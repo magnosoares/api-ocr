@@ -170,8 +170,8 @@ Substitua isso pela sua lógica de negócio!
   - [ ] 5.2 Implementar testes para endpoint 2
   - [ ] 5.3 Implementar logs para o endpoint 2
 - [X] 6. Endpoint 3 -> /recognition/pdf-file
-  - [ ] 6.1 Validação pydantic para endpoint 3
-  - [ ] 6.2 Implementar testes para endpoint 3
+  - [X] 6.1 Validação pydantic para endpoint 3
+  - [X] 6.2 Implementar testes para endpoint 3
   - [X] 6.3 Implementar logs para o endpoint 3
 - [ ] 7. Endpoint 4 -> /search/img-file
   - [ ] 7.1 Validação pydantic para endpoint 4

@@ -7,6 +7,7 @@ import io
 import re
 from typing import List, Dict, Any
 
+
 def ocr_image(image_bytes: bytes, lang: str = "por") -> str:
     """
     Receives an image and returns the extracted OCR text.
@@ -19,10 +20,11 @@ def ocr_image(image_bytes: bytes, lang: str = "por") -> str:
     text = pytesseract.image_to_string(image, lang=lang)
 
     # text cleaning
-    text = text.replace("\n", " ").replace("\r", " ").replace("\t", " ")
-    text = re.sub(r"\s+", " ", text)
+    # text = text.replace("\n", " ").replace("\r", " ").replace("\t", " ")
+    # text = re.sub(r"\s+", " ", text)
 
     return text.strip()
+
 
 def ocr_pdf(pdf_bytes: bytes, lang: str = "por") -> List[Dict[str, Any]]:
     """
@@ -30,7 +32,7 @@ def ocr_pdf(pdf_bytes: bytes, lang: str = "por") -> List[Dict[str, Any]]:
     """
     # receive the raw file
     pages = convert_from_bytes(pdf_bytes)
-    
+
     results: List[Dict[str, Any]] = []
     for page_number, page in enumerate(pages, start=1):
         text = pytesseract.image_to_string(page, lang=lang).strip()

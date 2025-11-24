@@ -7,7 +7,6 @@ client = TestClient(app)
 
 def test_recognition_pdf_file_invalid_type():
     txt_path = pathlib.Path(__file__).parent / "files" / "Sample_01_jpeg.jpeg"
-    txt_path.write_text("conteúdo não-PDF")
 
     with txt_path.open("rb") as f:
         response = client.post(

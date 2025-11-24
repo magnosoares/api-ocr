@@ -3,28 +3,17 @@
 from fastapi import APIRouter
 
 
-router = APIRouter(prefix="/about", tags = ["About"])
+router = APIRouter(prefix="/about", tags=["About"])
 
-@router.get("/", status_code = 200)
+
+@router.get("/", status_code=200)
 def about():
     """
     Developers
     """
     return [
-        {
-            "name": "Tiago André da Silveira Fialho",
-            "Matrícula": "192.028-6"
-        },
-        {
-            "name": "Magno",
-            "CPF": "123456"
-        },
-        {
-            "name": "Lúcia Helena",
-            "CPF": "987654321"
-        },
-        {
-            "name": "Thiago Lobo",
-            "CPF": "45678"
-        }
+        {"name": "Tiago André da Silveira Fialho", "Matrícula": "192.028-6"},
+        {"name": "Magno", "CPF": "123456"},
+        {"name": "Lúcia Helena", "CPF": "987654321"},
+        {"name": "Thiago Lobo", "CPF": "45678"},
     ]

@@ -4,6 +4,12 @@
 
 API para automatizar a realização de OCR em arquivos jpeg e png.
 
+## 🏆 Equipe de Desenvolvimento/Projeto
+- Magno Santana Soares
+- Lucia Helena Dutra Magalhães
+- Thiago Lobo Leite
+- Tiago André da Silveira Fialho 
+
 ## 📦 Dependências Técnicas
 - Python 3.12
 - FastAPI
@@ -135,29 +141,7 @@ http://localhost:8000/docs
 pytest tests/ -v
 ```
 
-## 🔧 Customização
-
-### Passo 1: Adapte os Schemas
-
-Edite `src/models/schemas.py` com seus modelos de dados.
-
-### Passo 2: Implemente sua Lógica
-
-Edite `src/api/main.py` e substitua a lógica do endpoint `/calcular`.
-
-### Passo 3: Crie Testes
-
-Edite `tests/test_template.py` para testar sua lógica.
-
-## Exemplo Atual
-
-API de soma simples:
-- **POST /calcular**: Soma dois números
-
-Substitua isso pela sua lógica de negócio!
-
-
-## 🛠️TO-DO List
+## 🛠️ TO-DO List
 - [X] 1. Separar endpoints de OCR do arquivo main.py
 - [X] 2. Configurar CORS
 - [X] 3. Configurar variáveis de ambiente em arquivo separado
@@ -165,22 +149,22 @@ Substitua isso pela sua lógica de negócio!
   - [X] 4.1 Validação pydantic para endpoint 1
   - [X] 4.2 Implementar testes para endpoint 1
   - [X] 4.3 Implementar logs para o endpoint 1
-- [ ] 5. Endpoint 2 -> /recognition/zip-files
-  - [ ] 5.1 Validação pydantic para endpoint 2
-  - [ ] 5.2 Implementar testes para endpoint 2
-  - [ ] 5.3 Implementar logs para o endpoint 2
+- [X] 5. Endpoint 2 -> /recognition/zip-files
+  - [X] 5.1 Validação pydantic para endpoint 2
+  - [X] 5.2 Implementar testes para endpoint 2
+  - [X] 5.3 Implementar logs para o endpoint 2
 - [X] 6. Endpoint 3 -> /recognition/pdf-file
   - [X] 6.1 Validação pydantic para endpoint 3
   - [X] 6.2 Implementar testes para endpoint 3
   - [X] 6.3 Implementar logs para o endpoint 3
-- [ ] 7. Endpoint 4 -> /search/img-file
-  - [ ] 7.1 Validação pydantic para endpoint 4
-  - [ ] 7.2 Implementar testes para endpoint 4
-  - [ ] 7.3 Implementar logs para o endpoint 4
-- [ ] 8. Endpoint 5 -> /search/zip-files
-  - [ ] 8.1 Validação pydantic para endpoint 5
-  - [ ] 8.2 Implementar testes para endpoint 5
-  - [ ] 8.3 Implementar logs para o endpoint 5
+- [X] 7. Endpoint 4 -> /search/img-file
+  - [X] 7.1 Validação pydantic para endpoint 4
+  - [X] 7.2 Implementar testes para endpoint 4
+  - [X] 7.3 Implementar logs para o endpoint 4
+- [X] 8. Endpoint 5 -> /search/zip-files
+  - [X] 8.1 Validação pydantic para endpoint 5
+  - [X] 8.2 Implementar testes para endpoint 5
+  - [X] 8.3 Implementar logs para o endpoint 5
 - [X] 9. Criar log para a aplicação
 - [X] 10. Alterar visualização dos logs: escrita em arquivo
-- [ ] 10. Finalizar README.md
+- [X] 10. Finalizar README.md

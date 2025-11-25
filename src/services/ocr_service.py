@@ -6,6 +6,7 @@ from PIL import Image
 import io
 import re
 from typing import List, Dict, Any
+from src.models.schemas import OCRResult
 
 
 def ocr_image(image_bytes: bytes, lang: str = "por") -> str:
@@ -38,3 +39,33 @@ def ocr_pdf(pdf_bytes: bytes, lang: str = "por") -> List[Dict[str, Any]]:
         text = pytesseract.image_to_string(page, lang=lang).strip()
         results.append({"page": page_number, "text": text})
     return results
+
+def ocr_pdf_texto(pdf_bytes: bytes, lang: str = "por") -> str:
+    """
+    Receives a pdf file and returns the extracted OCR text.
+    """
+    # receive the raw file
+    pages = convert_from_bytes(pdf_bytes)
+    text = ""
+    for page_number, page in enumerate(pages, start=1):
+        text += pytesseract.image_to_string(page, lang=lang).strip()
+    
+    return text.strip()
+
+def pesquisar_texto(texto: str, termo: str, nome_arquivo: str) -> List[Dict[str, Any]]:
+    # Busca com regex (case insensitive)
+    matches = list(re.finditer(re.escape(termo), texto, re.IGNORECASE))
+    trechos = []
+    
+    for m in matches:
+        inicio = max(0, m.start() - 25)
+        fim = min(len(texto), m.end() + 25)
+        trecho = texto[inicio:fim].replace('\n', ' ').strip()
+        trechos.append(f"...{trecho}...")
+
+    return OCRResult(
+        arquivo=nome_arquivo,
+        ocorrencias=len(matches),
+        trechos=trechos,
+        texto_ocr = texto)    
+

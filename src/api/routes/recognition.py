@@ -7,7 +7,7 @@ from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
 from fastapi.responses import JSONResponse
 import logging
 from src.services.ocr_service import ocr_image, ocr_pdf
-from src.models.schemas import RecognitionImageFileOutput, ALLOWED, ZipExtractionResponse
+from src.models.schemas import RecognitionImageFileOutput, RecognitionPDFFileOutput, ALLOWED, ZipExtractionResponse
 
 
 router = APIRouter(prefix="/recognition", tags = ["Recognition"])
@@ -174,6 +174,21 @@ def text_from_pdf_file(
     # leitura do conteúdo do pdf
     pdf_bytes = file.file.read()
 
-    # processamento OCR
-    results = ocr_pdf(pdf_bytes)
-    return {"ocr_result": results}
+    results = ocr_pdf(pdf_bytes, lang=lang)
+    elapsed_time = time.time() - start_time
+
+    # concatenar textos das páginas com 5 quebras de linha
+    full_text = ("\n\n\n\n\n").join([page["text"] for page in results])
+
+    # logar tempo de OCR
+    logger.info(
+        f"OCR EXECUTADO COM SUCESSO | Name={file.filename} | "
+        f"Size={file.size/1000:.1f}KB | "
+        f"Pages={len(results)} | "
+        f"Lang={lang} | "
+        f"Time={elapsed_time:.2f}s"
+    )
+
+    return RecognitionPDFFileOutput(
+        file_name=file.filename, file_size=file.size, text_output=full_text
+    )

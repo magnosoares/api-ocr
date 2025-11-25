@@ -12,17 +12,10 @@ class RecognitionImageFileOutput(BaseModel):
     file_name: str
     file_size: float
     text_output: str
-
-class OCRResult(BaseModel):
-    arquivo: str
-    ocorrencias: int
-    trechos: List[str]
-    texto_ocr: str
-
-class SearchResponse(BaseModel):
-    termo_buscado: str
-    total_arquivos_processados: int
-    resultados: List[OCRResult]
+class RecognitionPDFFileOutput(BaseModel):
+    file_name: str
+    file_size: float
+    text_output: str
 
 class OCRResult(BaseModel):
     arquivo: str

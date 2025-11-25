@@ -9,11 +9,11 @@ router = APIRouter(prefix="/about", tags=["About"])
 @router.get("/", status_code=200)
 def about():
     """
-    Developers
+    Equipe de Desenvolvedores
     """
     return [
-        {"name": "Tiago André da Silveira Fialho", "Matrícula": "192.028-6"},
-        {"name": "Magno", "CPF": "123456"},
-        {"name": "Lúcia Helena", "CPF": "987654321"},
-        {"name": "Thiago Lobo", "CPF": "45678"},
+        {"Nome": "Tiago André da Silveira Fialho", "Matrícula": "192.028-6"},
+        {"Nome": "Magno", "Matrícula": "123456"},
+        {"Nome": "Lúcia Helena Dutra Magalhães", "Matrícula": "76.847-2"},
+        {"Nome": "Thiago Lobo", "Matrícula": "45678"},
     ]

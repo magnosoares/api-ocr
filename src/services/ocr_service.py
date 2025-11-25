@@ -40,6 +40,7 @@ def ocr_pdf(pdf_bytes: bytes, lang: str = "por") -> List[Dict[str, Any]]:
         results.append({"page": page_number, "text": text})
     return results
 
+
 def ocr_pdf_texto(pdf_bytes: bytes, lang: str = "por") -> str:
     """
     Receives a pdf file and returns the extracted OCR text.
@@ -49,23 +50,21 @@ def ocr_pdf_texto(pdf_bytes: bytes, lang: str = "por") -> str:
     text = ""
     for page_number, page in enumerate(pages, start=1):
         text += pytesseract.image_to_string(page, lang=lang).strip()
-    
+
     return text.strip()
+
 
 def pesquisar_texto(texto: str, termo: str, nome_arquivo: str) -> List[Dict[str, Any]]:
     # Busca com regex (case insensitive)
     matches = list(re.finditer(re.escape(termo), texto, re.IGNORECASE))
     trechos = []
-    
+
     for m in matches:
         inicio = max(0, m.start() - 25)
         fim = min(len(texto), m.end() + 25)
-        trecho = texto[inicio:fim].replace('\n', ' ').strip()
+        trecho = texto[inicio:fim].replace("\n", " ").strip()
         trechos.append(f"...{trecho}...")
 
     return OCRResult(
-        arquivo=nome_arquivo,
-        ocorrencias=len(matches),
-        trechos=trechos,
-        texto_ocr = texto)    
-
+        arquivo=nome_arquivo, ocorrencias=len(matches), trechos=trechos, texto_ocr=texto
+    )

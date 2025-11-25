@@ -1,16 +1,24 @@
 # api-ocr/src/api/routes/recognition.py
 
-import time, zipfile, os, tempfile
+import time
+import zipfile
+import os
+import tempfile
 from pathlib import Path
 from typing import Literal
 from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
 from fastapi.responses import JSONResponse
 import logging
 from src.services.ocr_service import ocr_image, ocr_pdf
-from src.models.schemas import RecognitionImageFileOutput, RecognitionPDFFileOutput, ALLOWED, ZipExtractionResponse
+from src.models.schemas import (
+    RecognitionImageFileOutput,
+    RecognitionPDFFileOutput,
+    ALLOWED,
+    ZipExtractionResponse,
+)
 
 
-router = APIRouter(prefix="/recognition", tags = ["Recognition"])
+router = APIRouter(prefix="/recognition", tags=["Recognition"])
 logger = logging.getLogger(__name__)
 
 
@@ -26,12 +34,11 @@ async def text_from_file(file: UploadFile = File(...)):
         # Retorna HTTP 400 - Bad Request
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Tipo de arquivo inválido. Somente {', '.join(ALLOWED)} são permitidos."
+            detail=f"Tipo de arquivo inválido. Somente {', '.join(ALLOWED)} são permitidos.",
         )
 
     logger.info(
-        f"Validação bem sucedida: {file.filename}, "
-        f"Size: {(file.size / 1000):.1f}KB"
+        f"Validação bem sucedida: {file.filename}, " f"Size: {(file.size / 1000):.1f}KB"
     )
 
     # 2. Processing
@@ -42,19 +49,18 @@ async def text_from_file(file: UploadFile = File(...)):
         logger.error(f"Erro no processamento OCR para {file.filename}: {e}")
         # Retorna um HTTP 500 caso o serviço falhe
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
-            detail=f"OCR service failed: {e}"
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"OCR service failed: {e}",
         )
 
     return RecognitionImageFileOutput(
-        file_name=file.filename,
-        file_size=file.size,
-        text_output=text
+        file_name=file.filename, file_size=file.size, text_output=text
     )
+
 
 @router.post("/zip-files", response_model=ZipExtractionResponse, status_code=200)
 def text_from_zipfile(file: UploadFile = File(..., media_type="application/zip")):
-    
+
     # validação simples
     if file.content_type not in ["application/zip", "application/x-zip-compressed"]:
         logger.warning(
@@ -65,38 +71,37 @@ def text_from_zipfile(file: UploadFile = File(..., media_type="application/zip")
             status_code=400,
             content={"error": "Formato inválido! O arquivo deve ser um ZIP."},
         )
-    
+
     # Diretório temporário para extração
     temp_dir = tempfile.mkdtemp()
 
-    
     zip_path = os.path.join(temp_dir, file.filename)
-    
+
     with open(zip_path, "wb") as f:
         f.write(file.file.read())
-    
+
     resultados = []
     arquivos_extraidos = []
     arquivos_rejeitados = []
 
     try:
-        
-        #Extrai os arquivos e salva na pasta temporária
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+
+        # Extrai os arquivos e salva na pasta temporária
+        with zipfile.ZipFile(zip_path, "r") as zip_ref:
             zip_ref.extractall(temp_dir)
             logger.info(f"Arquivos extraídos com sucesso de {file.filename}")
 
         for nome_arquivo in os.listdir(temp_dir):
-            
+
             # Ignorar o próprio arquivo ZIP salvo na pasta temporária
             if nome_arquivo == file.filename:
                 continue
-            
+
             caminho_arquivo = os.path.join(temp_dir, nome_arquivo)
             tamanho_arquivo = os.path.getsize(caminho_arquivo)
 
             if os.path.isfile(caminho_arquivo):
-                extensao = Path(nome_arquivo).suffix.lower().strip('.')
+                extensao = Path(nome_arquivo).suffix.lower().strip(".")
 
                 with open(caminho_arquivo, "rb") as f:
                     conteudo = f.read()
@@ -117,11 +122,13 @@ def text_from_zipfile(file: UploadFile = File(..., media_type="application/zip")
                     texto = f"Tipo de arquivo '{extensao}' não suportado."
                     arquivos_rejeitados.append(nome_arquivo)
 
-                resultados.append({
-                    "file_name": nome_arquivo,
-                    "file_size": float(tamanho_arquivo),
-                    "text_output": texto
-                })
+                resultados.append(
+                    {
+                        "file_name": nome_arquivo,
+                        "file_size": float(tamanho_arquivo),
+                        "text_output": texto,
+                    }
+                )
 
     except Exception as e:
         logger.error(f"Erro ao processar arquivo ZIP: {str(e)}")
@@ -130,10 +137,10 @@ def text_from_zipfile(file: UploadFile = File(..., media_type="application/zip")
         )
 
     return ZipExtractionResponse(
-        total_files=len(arquivos_rejeitados)+len(arquivos_extraidos),
+        total_files=len(arquivos_rejeitados) + len(arquivos_extraidos),
         processed_files=arquivos_extraidos,
         unsupported_files=arquivos_rejeitados,
-        results=resultados
+        results=resultados,
     )
 
 

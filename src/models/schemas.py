@@ -1,9 +1,10 @@
 # src/models/schemas.py
 from pydantic import BaseModel
 from typing import List, Optional
-import magic
 
-_mime = magic.Magic(mime=True)
+# import magic
+
+# _mime = magic.Magic(mime=True)
 
 ALLOWED = {"image/jpeg", "image/png"}
 
@@ -12,10 +13,13 @@ class RecognitionImageFileOutput(BaseModel):
     file_name: str
     file_size: float
     text_output: str
+
+
 class RecognitionPDFFileOutput(BaseModel):
     file_name: str
     file_size: float
     text_output: str
+
 
 class OCRResult(BaseModel):
     arquivo: str
@@ -23,10 +27,12 @@ class OCRResult(BaseModel):
     trechos: List[str]
     texto_ocr: str
 
+
 class SearchResponse(BaseModel):
     termo_buscado: str
     total_arquivos_processados: int
     resultados: List[OCRResult]
+
 
 class ZipExtractionResponse(BaseModel):
     """
@@ -44,8 +50,7 @@ class ZipExtractionResponse(BaseModel):
                 "total_files": 2,
                 "processed_files": ["imagem1.png", "texto.pdf"],
                 "unsupported_files": [],
-                "results":
-                [
+                "results": [
                     {
                         "file_name": "imagem1.png",
                         "file_size": 40.5,
@@ -55,7 +60,7 @@ class ZipExtractionResponse(BaseModel):
                         "file_name": "texto.pdf",
                         "file_size": 40.5,
                         "text_output": "Leitura de PDF!",
-                    }
-                ]
+                    },
+                ],
             }
         }

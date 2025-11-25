@@ -1,12 +1,13 @@
 # api-ocr/src/api/routes/recognition.py
 
-import time
+import time, zipfile, os, tempfile
+from pathlib import Path
 from typing import Literal
 from fastapi import APIRouter, File, HTTPException, Query, UploadFile, status
 from fastapi.responses import JSONResponse
 import logging
 from src.services.ocr_service import ocr_image, ocr_pdf
-from src.models.schemas import RecognitionImageFileOutput, ALLOWED
+from src.models.schemas import RecognitionImageFileOutput, ALLOWED, ZipExtractionResponse
 
 
 router = APIRouter(prefix="/recognition", tags = ["Recognition"])
@@ -51,19 +52,89 @@ async def text_from_file(file: UploadFile = File(...)):
         text_output=text
     )
 
-@router.post("/zip-files")
-def text_from_zipfile(file: UploadFile = File(...)):
+@router.post("/zip-files", response_model=ZipExtractionResponse, status_code=200)
+def text_from_zipfile(file: UploadFile = File(..., media_type="application/zip")):
+    
     # validação simples
-    if file.content_type not in ["image/jpeg", "image/png"]:
+    if file.content_type not in ["application/zip", "application/x-zip-compressed"]:
+        logger.warning(
+            f"ARQUIVO {file.filename} INVÁLIDO! Arquivo deve ser .ZIP"
+            f"ContentType = {file.content_type}"
+        )
         return JSONResponse(
             status_code=400,
             content={"error": "Formato inválido! O arquivo deve ser um ZIP."},
         )
-    # leitura da imagem
-    image_bytes = file.file.read()
-    # processamento OCR
-    texto = ocr_image(image_bytes)
-    return {"text": texto}
+    
+    # Diretório temporário para extração
+    temp_dir = tempfile.mkdtemp()
+
+    
+    zip_path = os.path.join(temp_dir, file.filename)
+    
+    with open(zip_path, "wb") as f:
+        f.write(file.file.read())
+    
+    resultados = []
+    arquivos_extraidos = []
+    arquivos_rejeitados = []
+
+    try:
+        
+        #Extrai os arquivos e salva na pasta temporária
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(temp_dir)
+            logger.info(f"Arquivos extraídos com sucesso de {file.filename}")
+
+        for nome_arquivo in os.listdir(temp_dir):
+            
+            # Ignorar o próprio arquivo ZIP salvo na pasta temporária
+            if nome_arquivo == file.filename:
+                continue
+            
+            caminho_arquivo = os.path.join(temp_dir, nome_arquivo)
+            tamanho_arquivo = os.path.getsize(caminho_arquivo)
+
+            if os.path.isfile(caminho_arquivo):
+                extensao = Path(nome_arquivo).suffix.lower().strip('.')
+
+                with open(caminho_arquivo, "rb") as f:
+                    conteudo = f.read()
+
+                if extensao in ["jpg", "jpeg", "png"]:
+                    texto = ocr_image(conteudo, "por")
+                    logger.info(f"OCR imagem executado: {nome_arquivo}")
+                    arquivos_extraidos.append(nome_arquivo)
+
+                elif extensao == "pdf":
+                    resultado_pdf = ocr_pdf(conteudo, lang="por")
+                    texto = ("\n\n\n\n\n").join([p["text"] for p in resultado_pdf])
+                    logger.info(f"OCR PDF executado: {nome_arquivo}")
+                    arquivos_extraidos.append(nome_arquivo)
+
+                else:
+                    logger.warning(f"Extensão não suportada no .zip: {nome_arquivo}")
+                    texto = f"Tipo de arquivo '{extensao}' não suportado."
+                    arquivos_rejeitados.append(nome_arquivo)
+
+                resultados.append({
+                    "file_name": nome_arquivo,
+                    "file_size": float(tamanho_arquivo),
+                    "text_output": texto
+                })
+
+    except Exception as e:
+        logger.error(f"Erro ao processar arquivo ZIP: {str(e)}")
+        return JSONResponse(
+            status_code=500, content={"error": "Erro ao processar o ZIP."}
+        )
+
+    return ZipExtractionResponse(
+        total_files=len(arquivos_rejeitados)+len(arquivos_extraidos),
+        processed_files=arquivos_extraidos,
+        unsupported_files=arquivos_rejeitados,
+        results=resultados
+    )
 
 
 @router.post("/pdf-file", status_code=200)

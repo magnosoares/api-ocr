@@ -1,41 +1,53 @@
 # api-ocr/src/api/routes/recognition.py
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
-import logging
+from fastapi import APIRouter, File, HTTPException, UploadFile, status
 from fastapi.responses import JSONResponse
-from pydantic import ValidationError
-import pytesseract
-from PIL import Image
-import io
-import re
+import logging
 from src.services.ocr_service import ocr_image, ocr_pdf
-from src.models.schemas import RecognitionImageFileInput, RecognitionImageFileOutput
+from src.models.schemas import RecognitionImageFileOutput, ALLOWED
+
 
 router = APIRouter(prefix="/recognition", tags = ["Recognition"])
-
 logger = logging.getLogger(__name__)
 
 
 @router.post("/image-file", response_model=RecognitionImageFileOutput)
-async def text_from_file(input: RecognitionImageFileInput = Depends()):
+async def text_from_file(file: UploadFile = File(...)):
 
-    file = input.file
+    # 1. File type validation
+    if file.content_type not in ALLOWED:
+        logger.warning(
+            f"Tentativa de upload inválido: {file.filename}, "
+            f"Tipo: {file.content_type}"
+        )
+        # Retorna HTTP 400 - Bad Request
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Tipo de arquivo inválido. Somente {', '.join(ALLOWED)} são permitidos."
+        )
 
     logger.info(
         f"Validação bem sucedida: {file.filename}, "
         f"Size: {(file.size / 1000):.1f}KB"
     )
 
-    image_bytes = await file.read()
-    text = ocr_image(image_bytes, "por")
+    # 2. Processing
+    try:
+        image_bytes = await file.read()
+        text = ocr_image(image_bytes, "por")
+    except Exception as e:
+        logger.error(f"Erro no processamento OCR para {file.filename}: {e}")
+        # Retorna um HTTP 500 caso o serviço falhe
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+            detail=f"OCR service failed: {e}"
+        )
 
     return RecognitionImageFileOutput(
         file_name=file.filename,
         file_size=file.size,
         text_output=text
     )
-
-
 
 @router.post("/zip-files")
 def text_from_zipfile(file: UploadFile = File(...)):

@@ -25,8 +25,12 @@ def test_valid_image_jpeg():
     assert response.status_code == 200
     data = response.json()
     assert data["file_name"] == "image_test_ocr.jpeg"
-    assert "text_output" in data
-    assert data["text_output"] == "Cedric himself knew nothing whatever about it. It had never been even mentioned to him. He knew that his papa had been an Englishman, becanse his mamma had told him so; but then his papa had died when he was so litle a boy that he could not remember very much about him. except that he was big, and had blue eyes and a long mustache, and that it was a splendid thing to be carried around the room on his shoulder."
+
+    text_from_file = data["text_output"].replace("\n", " ").strip()
+    text_for_test = "Cedric himself knew nothing whatever about it. It had never been even mentioned to him. He knew that his papa had been an Englishman, becanse his mamma had told him so; but then his papa had died when he was so litle a boy that he could not remember very much about him. except that he was big, and had blue eyes and a long mustache, and that it was a splendid thing to be carried around the room on his shoulder."
+    
+    assert text_from_file == text_for_test
+    
 
 
 def test_valid_image_png():
@@ -42,8 +46,10 @@ def test_valid_image_png():
     assert response.status_code == 200
     data = response.json()
     assert data["file_name"] == "image_test_ocr.png"
-    assert "text_output" in data
-    assert data["text_output"] == "Noisy Image to test Tesseract OCR"
+    
+    text_from_file = data["text_output"].replace("\n", " ").strip()
+    text_for_test = "Noisy Image to test Tesseract OCR"
+    assert text_from_file == text_for_test
 
 
 def test_invalid_file_pdf():

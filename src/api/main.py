@@ -8,7 +8,8 @@ from src.config import (
     CORS_ORIGINS,
     ENVIRONMENT,
     LOG_LEVEL,
-    TESSERACT_LINUX_CMD,
+    TESSERACT_WINDOWS_CMD,
+    TESSERACT_LINUX_CMD
 )
 from src.config import setup_logging
 from src.api.routes.recognition import router as recognition_router
@@ -26,8 +27,8 @@ VERSION = (VERSION,)
 ENVIRONMENT = (ENVIRONMENT,)
 LOG_LEVEL = (LOG_LEVEL,)
 CORS_ORIGINS = CORS_ORIGINS
-tesseract_cmd = TESSERACT_LINUX_CMD
-# tesseract_cmd = TESSERACT_WINDOWS_CMD
+# tesseract_cmd = TESSERACT_LINUX_CMD
+tesseract_cmd = TESSERACT_WINDOWS_CMD
 
 # ======================================
 # Logging config

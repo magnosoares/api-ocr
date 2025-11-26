@@ -22,7 +22,7 @@ def test_ocr_zip_invalid_type():
 def test_ocr_zip():
 
     # caminho do arquivo ZIP no projeto
-    txt_path = pathlib.Path(__file__).parent / "files" / "TesteAPIt.zip"
+    txt_path = pathlib.Path(__file__).parent / "files" / "TesteAPI.zip"
 
     # faz o upload simulando o envio real
     with txt_path.open("rb") as f:

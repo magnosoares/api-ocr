@@ -21,8 +21,8 @@ def ocr_image(image_bytes: bytes, lang: str = "por") -> str:
     text = pytesseract.image_to_string(image, lang=lang)
 
     # text cleaning
-    # text = text.replace("\n", " ").replace("\r", " ").replace("\t", " ")
-    # text = re.sub(r"\s+", " ", text)
+    text = text.replace("\n", " ").replace("\r", " ").replace("\t", " ")
+    text = re.sub(r"\s+", " ", text)
 
     return text.strip()
 

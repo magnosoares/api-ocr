@@ -138,7 +138,7 @@ http://localhost:8000/docs
 ### 4. Rodar testes
 
 ```bash
-pytest tests/ -v
+python -m pytest .\tests\
 ```
 
 ## 🛠️ TO-DO List
